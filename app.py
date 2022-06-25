@@ -52,15 +52,17 @@ def home():
                         if form.password.data!=wks.cell(pos.row,4).value:
                                 return flask.render_template('index.html',form=form,message="Password incorrect")
                         else:
-                                return flask.render_template('index.html',form=form,message="Logged in Successfully")
+                                return flask.render_template('index.html',form=form,message="Logged in Successfully",id=wks.cell(pos.row,1).value)
                 else:
                         time.sleep(random.randint(1,3))
-                        wks.append_row(["CL"+datetime.now().strftime("%d%m%Y%H%M%S"),form.email_id.data,form.name.data,form.password.data])
-                        return flask.render_template('index.html',form=form,message="registration Successful! ")
+                        id= "CL"+datetime.now().strftime("%d%m%Y%H%M%S")
+                        wks.append_row([id,form.email_id.data,form.name.data,form.password.data])
+                        return flask.render_template('index.html',form=form,message="registration Successful!",id=id)
         else:
                 return flask.render_template('index.html',form=form)
-@app.route('/account_creation',methods=['GET','POST'])
-def account():
+
+@app.route('/<id>/account_creation',methods=['GET','POST'])
+def account(id):
         sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
         wks=sh.worksheet("Client_Details")
         form = SignupForm(flask.request.form)
