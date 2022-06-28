@@ -3,20 +3,31 @@ from datetime import datetime
 from email import message
 import gspread
 import flask
-from wtforms import Form,StringField,PasswordField,IntegerField,SelectField,EmailField,DateField
-from wtforms.validators import InputRequired, Length
+from wtforms import Form,StringField,PasswordField,IntegerField,SelectField,EmailField,DateField,BooleanField
+from wtforms.validators import InputRequired,DataRequired, Length
 import time
 import random
+from flask_mail import Mail,Message
+
 
 app = flask.Flask(__name__, template_folder="Templates")
 app.config['SECRET_KEY']='abcdefghijkhlmnop'
+mail=Mail(app)
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'apteeproject@gmail.com'
+app.config['MAIL_PASSWORD'] = 'zjvnrfrvhyavhvvo'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
 #class for signup form
 class SignupForm(Form):
         exam=[('CAT','Common Aptitude Test'),('GATE','GATE'),('JOB','Job Aptitude'),('OTH','Others')]
         genders=[('MALE',"Male"),('FEMALE','Female'),('OTHERS','Others')]
         courses=[('Btech','Bachelor of Technology'),('BA','Bachelor of Arts'),('BSc','Bachelor of Science'),('BBA','Bachelor of Business Administration'),
         ('MBA','Master of Business Administration'),('MA','Master of Arts'),('MSc','Master of Science'),('MTech','Master of Technology'),('OTH','Others')]
-        email_id = EmailField(id='Register_email',validators=[InputRequired(), Length(min=4, max=20)],render_kw={"placeholder": "Let the autofill complete it @gmail.com"})
+        email_id = EmailField(id='Register_email',validators=[InputRequired(), Length(min=4, max=50)],render_kw={"placeholder": "Let the autofill complete it @gmail.com"})
         password = PasswordField(id='Register_password',validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Type in a password you won't remember"})
         name=StringField(id='Register_name',validators=[InputRequired()],render_kw={"placeholder": "What should we call you?"})
         target=SelectField(id='Register_target',validators=[InputRequired()],choices=exam,render_kw={"placeholder": "What is your aim?"})
@@ -26,6 +37,7 @@ class SignupForm(Form):
         course=SelectField(id='Register_course',validators=[InputRequired()],choices=courses,render_kw={"placeholder": "What Course are you enrolled in?"})
         DOB=DateField(id='Register_passout_year',validators=[InputRequired()],render_kw={"placeholder": "Tell us when to wish you?"},format="%Y-%m-%d")
         semester=IntegerField(id='Register_age',validators=[InputRequired()],render_kw={"placeholder": "Which semester are you in? (0 if already passedout) "})
+        logincheckbox = BooleanField('login', validators=[DataRequired(), ])
 #connecting the login sheet to backend
 auth =  {
   "type": "service_account",
@@ -39,7 +51,14 @@ auth =  {
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/datahub%40aptee-353914.iam.gserviceaccount.com"
 }
-
+def send_email(html,email,param):
+        msg = Message(
+                                        'OTP for Aptee',
+                                        sender ='apteeproject@gmail.com',
+                                        recipients = [email]
+                                )
+        msg.html=flask.render_template(html,OTP=param[0],link=param[1])
+        mail.send(msg)
 gc = gspread.service_account_from_dict(auth)
 @app.route('/', methods =['POST', 'GET'])
 def home():
@@ -54,10 +73,15 @@ def home():
                         else:
                                 return flask.render_template('index.html',form=form,message="Logged in Successfully",id=wks.cell(pos.row,1).value)
                 else:
-                        time.sleep(random.randint(1,3))
-                        id="CL"+datetime.now().strftime("%d%m%Y%H%M%S")
-                        wks.append_row([id,form.email_id.data,form.name.data,form.password.data])
-                        return flask.render_template('index.html',form=form,message="registration Successful!",id=id)
+                        if form.logincheckbox.data==True:
+                                return flask.render_template('index.html',form=form,message="Please Register First!")
+                        else:
+                                time.sleep(random.randint(1,3))
+                                OTP=random.randint(10000,99999)
+                                id="CL"+datetime.now().strftime("%d%m%Y%H%M%S")
+                                send_email('registration_email.html',form.email_id.data,param=[OTP,('127.0.0.1/account_creation/'+str(id))])
+                                wks.append_row([id,form.email_id.data,form.name.data,form.password.data,OTP])
+                                return flask.render_template('index.html',form=form,message="registration Successful!",id=id)
         else:
                 return flask.render_template('index.html',form=form)
 @app.route('/account_creation/<id>',methods=['GET','POST'])
@@ -65,18 +89,36 @@ def account(id):
         sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
         wks=sh.worksheet("Client_Details")
         form = SignupForm(flask.request.form)
-        print(id)
         if wks.find(id):
                 pos=wks.find(id)
-                wks.update_cell(pos.row, 5, str(form.DOB.data))
-                wks.update_cell(pos.row, 6, form.target.data)
-                wks.update_cell(pos.row, 7, form.gender.data)
-                wks.update_cell(pos.row, 8, form.college.data)
-                wks.update_cell(pos.row, 9, form.college_location.data)
-                wks.update_cell(pos.row, 10, form.course.data)
-                wks.update_cell(pos.row, 11, form.semester.data)   
+                wks.update_cell(pos.row, 6, str(form.DOB.data))
+                wks.update_cell(pos.row, 7, form.target.data)
+                wks.update_cell(pos.row, 8, form.gender.data)
+                wks.update_cell(pos.row, 9, form.college.data)
+                wks.update_cell(pos.row, 10, form.college_location.data)
+                wks.update_cell(pos.row, 11, form.course.data)
+                wks.update_cell(pos.row, 12, form.semester.data)   
                 return flask.render_template('register.html',form=form,id=id)
         else:
                 return flask.render_template('index.html',form=form,message="error")
+@app.route('/administrator_login',methods=['GET'])
+def admin_login():
+        sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
+        wks=sh.worksheet("Client_Details")
+        form = SignupForm(flask.request.form)
+        if form.email_id.data:
+                if form.email_id.data in wks.col_values(2):
+                        pos =wks.find(form.email_id.data.lower())
+                        if form.password.data!=wks.cell(pos.row,4).value:
+                                return flask.render_template('admin_login.html',form=form,message="Password incorrect")
+                        else:
+                                return flask.render_template('admin.html',form=form,message="Logged in Successfully",id=wks.cell(pos.row,1).value)
+                else:
+                        return flask.render_template('admin_login.html',form=form,message="We couldnt find your email in our DB please contact Super Administrator")         
+        else:
+                return flask.render_template('admin_login.html',form=form)
+@app.route('/admin_panel/<id>')
+def admin_panel(id):
+        return
 if __name__ == '__main__':
     app.run(debug = True)
