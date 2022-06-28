@@ -53,10 +53,10 @@ auth =  {
 }
 def send_email(html,email,param):
         msg = Message(
-                                        'OTP for Aptee',
-                                        sender ='apteeproject@gmail.com',
-                                        recipients = [email]
-                                )
+                        'OTP for Aptee',
+                        sender ='apteeproject@gmail.com',
+                        recipients = [email]
+                        )
         msg.html=flask.render_template(html,OTP=param[0],link=param[1])
         mail.send(msg)
 gc = gspread.service_account_from_dict(auth)
