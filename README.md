@@ -17,4 +17,7 @@ Release Notes:
 -moved the login system to all the pages in the website.
 -updated verification mail
 -completed login page
-
+01-07-22:
+-added encyption
+-optimized email
+-added site security

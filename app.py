@@ -8,15 +8,17 @@ from wtforms.validators import InputRequired,DataRequired, Length
 import time
 import random
 from flask_mail import Mail,Message
-
-
+from cryptography.fernet import Fernet
+import string
+from keygenerator import generatekey
+cipher_suite = Fernet(bytes(generatekey(seed=445),'UTF-8'))
 app = flask.Flask(__name__, template_folder="Templates")
 app.config['SECRET_KEY']='abcdefghijkhlmnop'
 mail=Mail(app)
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'apteeproject@gmail.com'
-app.config['MAIL_PASSWORD'] = 'zjvnrfrvhyavhvvo'
+app.config['MAIL_PASSWORD'] = str(cipher_suite.decrypt(bytes('gAAAAABivcvM07hd5UvYq-h_Qi3_AXivMrKkhaWqvzzvlQ0PFffl4pk7tF7JpYCvADHYZITI53DDANHAvdheAdCwLR1Lmd2pPYonRE4QrPrCAh_6xUanbGo=','UTF-8')),'UTF-8')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -41,23 +43,23 @@ class SignupForm(Form):
 #connecting the login sheet to backend
 auth =  {
   "type": "service_account",
-  "project_id": "aptee-353914",
-  "private_key_id": "0f8783325d8b4b8400bf9f89a6d4b91c1317faf7",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDW4TKM/wixM2BY\nFKQOXExwbNuChLFCjAJuP0MOFfirMISDlxK/HPaKd5iYg9uu/0IG4bC/vO/SzXae\nJXetb3yh3L0KFc4DeAq7fwW2BpJFSAY82ErOTcF6Rfxdq/JrQkXF1WRwHhikrdJy\nDEVfI2Xh2evaeesdLM7/CUPf71LHPrxD14cEsAgAVyIflzADnJagOCKxBNLvhIVL\n5mcXLhDbRiXAFxw2bq10VPI4Bu2dBYJJLXXcU1LV5Jn45Gj4PTYVq//OmOnbxUsU\nNCwgTfMFtgbtOsiULCjq1Zsb7d5YD8Csb/EDSnPqcGUo/dkjyd6nsovz6MDM7Ubo\nn+3/udMpAgMBAAECggEAC6j6MYD4U4dGa9ko4tea1UHu8mjpZoNK8XkQ1i+WiBGQ\nq0RUIdc8QJzHRMVo8xjKWC3AhdMGj4GTNXcyhJCHapAcGPNAc9s8d9qncG5wWv6S\nyhPxkTrSbCRmkp2tQKk+uILBGb1kWHFPOV2VmRlGYshMvlT9z146WEgELR9jNkkF\naOOIb7ZJHlCDOO63R6d04YO2HCmQbRXCPVQrw/CA3k2QCuiSNWCjn68evNQ5KEAl\n07I++ZeaMJzlExePD9BRlqX6lLqD+nLDyng69+QdqcHgMt/gQxgHxMEke3LrqKtO\n7p/S37/RYlJWj2KNY+6lnGzGyXv638exzv9hKGh7FQKBgQD/1DZ7m6N87KRP8WaE\nN9h9zH5EKnZxkBt77LdNWR0TjSE37TCls/SH88fUy0yL/9ZsJe/aHQWG0S7j8yHH\nBWId2xKoFfZUrYMv8csN+CAfDcwPas4Uz8wIvjsdXyfGuOOwtPL22l5NbT1J7TM5\np8kny4bkuif5eknv9IB/320pBQKBgQDXBfnQ2aMT/Kvs+yyttoNccSJ5TfHXL1is\nJMq1miBDqt3635RfXrFufZmqBFVQZKvHTmiymLIknhsSXQicIIDnPq3qBImNf7Fc\nbUGn7eZ8bLVUjSCMm+FeS6v8FYoaK7oejHsNOxpkR2j/EizvmxkYrwseSiDtD4rN\n17FaPMKK1QKBgQCQo62uEx/K2IxJuoUoid53uW9GIO/YYw528S3tqE19KVS3pv3T\nIbxGRTkdAVgk6x+TA5vpKHFgeNJXBLZ7LHr9wEd7Cve7hmJecAlKu5eFlyphKRSc\nxaNo6gzIHW2CuDPbS2L22B1rDzEQo/BLT6a2PiblGK7TKSW2aflg0rSH9QKBgEUd\nzKFPc9YW4AS68C+efTcXvqcTYOt0cqJS6T3anwhhQh1EBONrAsmrYdt+rRW8ZmMY\nVxshbhHLKJSMhxn4cLbkNO8GKljrdM1q6THbjLzuDJNzEcVgzd6LoGrVWaDz8U2k\nhmFIYEFfmuZypzMVvclrar1/wnmxB0MHVCDXawlJAoGBAOxOvLE5Dlm6cxPlGmGb\njam7kKBmNGI9mYRdPvtPsp6aAF9BJr7FlCCT4x3OHcXe3wXVswpWTvGKQ6qM6M9I\ncfRC/RvaUbZ23SwQ7B3Rse9GTHsT7yuniF01/G+kzZdwc/vNidlKCUA9wB8JSY84\nE/g2hHDsONLtOgcQC9XL1ako\n-----END PRIVATE KEY-----\n",
-  "client_email": "datahub@aptee-353914.iam.gserviceaccount.com",
-  "client_id": "118436377233006939242",
+  "project_id": str(cipher_suite.decrypt(bytes('gAAAAABivv2DfPUWU20sCKtRuHRqWeNUw3fcCOmxHG3m5qOhzCPKrBKl5uq7iiAEfiMSLI_gSDEWEP7tO54s43IcR7xaOjtLWw==','UTF-8')),'UTF-8'),
+  "private_key_id": str(cipher_suite.decrypt(bytes('gAAAAABivv9ULkTSsOLABKn3a8XIaij6V1V1JLzOU4C1gocLmDhKwrnIpjfBIFd_PWZ-MCm8mYRxKfDiz1XIRqq50bKgV8qijHabQdIBZG-aFY6fgl6nTxFPx9DowbH08Yub_2lRBEDn','UTF-8')),'UTF-8'),
+  "private_key": str(cipher_suite.decrypt(bytes('gAAAAABivv8EirIommtvEVutDKROJA8-3hLDKhHzhDyoUkLunHuTz--_qkrFdgJAF6w8T7KzXQXNWspKR-gSgTnoH_u4NBhJYnkBEzOZfJg-bE9zy_RL8sWcAMnDEpesuB9KHUWAS0m81pNp0DOvN2A3pH9rdOfwume1zR3FoTAboKHi7Qg5zvXsy8b2KTslVptAeSLdsjQv9yaRXs7qXiCRAJVOyN03stgga8RbgTD5iQmOdXfPSRRRMiu5nZ0QriLfyp2NWNsadYOrF-tybA6-07PiliOSpv2dCC1ef64hXFN1r3jbSTGRXvKFKXMofYPZdFnINh9e37JNLnp3EOvwToYmo86ZFxnnTfVP3zpP7ijmJFA6neFJLbgqaTwO7X7Nyel2lOu1utZ069GQ7TovsDSfnsyHFcjwtX_WRAr0nEzciJhOOvgSQIICHnUPMkJAlq0U9qs9UtHWGx7ITZp258sLFiQLd8I9U5AHkN6w1p2LGx7jzlLATXZ-B18HC9f_jyLzqZ-p_1Y2xnAc_ezoCvmablrjAOeThVdrEdVtbxsxZYkILRmX7B506cBOngEhf-9CxEcxIoqj6gL1m2txaxQ8MTCRidcgAkvM7PeUnGtdm2RWI2qOSSJUne9T7ULBV62XtcEDFOyE42MxiEWPBXzWE-kbpMI2vpEsnP22tEr2KjiMcNRNt0k7trhQ-PMMFpVRIGgPhMor7jobxUtKtoxpQZe5H5Q4WJeCpuNRzZZ77B00rj3L7ltdZElUE59AiTMDcpspulBW1A9AXo5mJjHB41dOzVQqkHU6aHUordV1BGFFB3eNIYc2Z7LXhWG3k2m38MRCCnO58Pobj3Cho2c5R6yJluBI_KtnwN7Kb0JiUBMhFAf9qLCgv20hIAjG1Dpjn7Uq4dsy0fCNznd58CAgb5oJIuc58zwtQMCTbXPApokabtzusfOiQKpoLnisFDC0hP4wRXVA4iNs4fY_dxrx1AGqK1nvXezudIz4fpu_5jAj82i7zu1LoWwO70OedmtzoUkwEdqzE4N3sF5bY5wbmAzfegRXpqDzUa2pJNP2fbs5QMPGtCqRHq5WcnLaALBE71ft8bx2A_mt13cPor3bPV1YcQ9y9PKnHRPo1px5QKeCnHnd8Agkw_ULNaV6K4xTSZ8l_8W_Y3NP-JGc_bBJ5pG_bMoeY0N8DJ2u74TIqqnGmVs9gtLmpwLBgUuUb5QwjqTwkNlMhjlV8NL4KrI9pa6fsnd6BvNn7Pt9OGTpsxPgsGroJQEMkOzxtvBDyqajGxoRfvHcayfvtIyHoA907el0gSgoHjiSEFns_bV9v9iI5HWS5WR1ZEeRFEhbhoqjoTjZ7qE48hMdej0WUGx6Il6BX8MMYaZxWbdWi32lG9YTl0odOU32gevRRXUWlx4ES3dCEc6A1f1XSh-9Enaah10LJIerJSCMEt6O9uad8eVzUtIofNbD4ndIMr-I08f5Ulycd7ZhNu7TY-lKsnZIUohJf5JyqhLd6gltDTQhCX2zly6Pjx5cuoY33DFtvmyfr0PjSQgTbV0KKJ8hcd9cm-NT-MS51C3aOqUXyEgY_-9HOyqJq7Oggj8K9rfCNWyZJE603j_KDDYceeLCMhsjweoJy43goI8iWKLkE6Uz-JhnKi7VwScs23k0Y6BuegrHT2sRAsG8gFRmb1BlZU2pTFkkUqkeh2r9BRGyP-cK996jRFDY5O2riC8EbkJyJ1OxidfS26UbQWMFRs8PsujLYYTCQRg6xChIrqi_9GgqKxrPg89vVwEM-1KXlz2R5n7gDnwbZp2HSvm-Rc-nL7xfAWzP-6it7R8EZ1fBJN9eMM3YOacA_pUSUpwk0FlByKODq_Jj_5EZUpjlcJnTi0u8B59cEcd5VUG2huzREt6AJWskNXx5aAPHhbMW1inP5sgFk57ARz52F58Msi36bAwrgBlW64n69NLKLEZX161LHSrvsOLo5Tupap3udQvuXHoNOvoZvAy4dUWKw0g7mKhwICge5CvnckZS8ScajCGIM3hluEgNbjAVVKScpsSvVZu_DpDBZ_sPAwlBRNuUAYLGK-o4_wo8AKo_eJ8oW3VUi7mOOchyd5E-mPdO2jYTn1Zvl9US4yOvv7WF15AZ_yGkaluZFMwSPF2VxFQEUEDqKc-hyPkUgeLbtUe29wKCrogV-BTKCxqbASXUdeyR9HRjke2xQCSEF0yLaqzirqRB6z-ztgcy-0sZNuIImXAn_n5EwFGoQuNV3wKpVRomS-nqoLJMJ5-UXrfJ1K73PHuOpnrbyA0UbAC2LhsIe1OU3NO9Y705xzX4y6MyxiMJODwJqhnR7oLdfAVtu7anhiIWYi1dVrg=','UTF-8')),'UTF-8'),
+  "client_email": str(cipher_suite.decrypt(bytes('gAAAAABivv29jL7maeToK2Q0FZSVpMsqMldf9iA5aFWOWyZEpA2arExe6NdZQTigFeobBAf8WuTyw-HAOS6WNPHAvaVvSmy7qWqhcMyDR5jVOmxZNn28LlUR3BDcER7h8HfR0GdYl0Uv','UTF-8')),'UTF-8'),
+  "client_id": str(cipher_suite.decrypt(bytes('gAAAAABivv3lfsJ37JJQmCNSzUJn1QpZz6Z74LoYruWIcWAVUWcDm6wi8A6AePUG8PjkVTNV_5z-MNHhwwRnU3IRT-RSBbr-HM2cs3Qmy0u__5u4ywBDW28=','UTF-8')),'UTF-8'),
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/datahub%40aptee-353914.iam.gserviceaccount.com"
+  "client_x509_cert_url": str(cipher_suite.decrypt(bytes('gAAAAABivv-cbRoolOIBUwguOitM3pdrml17SGKSHJmR5DMODHQWgJoHyb2-rc3-txz2_PVMMcMMPT6AMI6rOZ8n0cer__q1e8_Yq3AxVI0lvKm297F4IjTU1XAL2bnA0Bzri8GTrdkwjWixoAmw-NQhRr13IHCDGzKNINzGbLhCY9LMWvG8kJNw8eMUvELAM1ypz4c6_ywbH6KRTj8x1FqEfpiLBOt49g==','UTF-8')),'UTF-8')
 }
-def send_email(html,email,param):
+def send_email(Header,html,email,param):
         msg = Message(
-                        'OTP for Aptee',
+                        Header,
                         sender ='apteeproject@gmail.com',
                         recipients = [email]
                         )
-        msg.html=flask.render_template(html,OTP=param[0],link=param[1])
+        msg.html=flask.render_template(html,name=param[0],OTP=param[1],link=param[2])
         mail.send(msg)
 gc = gspread.service_account_from_dict(auth)
 @app.route('/', methods =['POST', 'GET'])
@@ -79,8 +81,8 @@ def home():
                                 time.sleep(random.randint(1,3))
                                 OTP=random.randint(10000,99999)
                                 id="CL"+datetime.now().strftime("%d%m%Y%H%M%S")
-                                send_email('registration_email.html',form.email_id.data,param=[OTP,('127.0.0.1/account_creation/'+str(id))])
-                                wks.append_row([id,form.email_id.data,form.name.data,form.password.data,OTP])
+                                send_email(string.capwords(form.name.data)+' here is the otp for your Aptee account','registration_email.html',form.email_id.data.lower(),param=[string.capwords(form.name.data),OTP,('127.0.0.1/account_creation/'+str(id))])
+                                wks.append_row([id,form.email_id.data.lower(),string.capwords(form.name.data),form.password.data,OTP])
                                 return flask.render_template('index.html',form=form,message="registration Successful!",id=id)
         else:
                 return flask.render_template('index.html',form=form)
