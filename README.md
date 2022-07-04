@@ -22,7 +22,7 @@ Release Notes:\n
 -added encyption
 -optimized email
 -added site security
-\n
+<br \>
 04-06-22:
 -minor changes
 
