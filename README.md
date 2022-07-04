@@ -24,3 +24,11 @@ Release Notes:
 04-06-22:
 -minor changes
 
+****************************************************
+Update by Atif on 5 July 2022 at 1:05 AM
+
+Front-end Update
+---Login successfull message at right bottom side after login
+---Logo and Aptee style change on top
+---Registration page update (Complete)
+

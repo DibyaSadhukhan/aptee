@@ -26,11 +26,13 @@
       <!-- Navbar here -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <div class="logocontainer">
+          <!-- <div class="logocontainer">
           <img id="logo" src="https://drive.google.com/uc?export=veiw&id=1y6bMLp1mihkFZzZVWORh8bsIDDS5hvru">
-        </div>
-          <a class="navbar-brand" href="#"> <span id="ap">Ap</span><span id="tee">Tee</span></a>
-          <p id="build">Build your dream!</p>
+        </div> -->
+          <!-- <a class="navbar-brand" href="#"> <span id="ap">Ap</span><span id="tee">Tee</span></a>
+          <p id="build">Build your dream!</p> -->
+          <img  src="https://drive.google.com/uc?export=veiw&id=1Cn7Ff_UBZrI6IJQyqIKCbZwixeBEaiWY">
+
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -117,7 +119,7 @@
                   <div class="control-group">
                     <label class="control-label" for="signin"></label>
                     <div class="controls sub_button">
-                      <button id="signin" name="signin" class="btn btn-success" >Sign In</button>
+                      <button id="signiin"  name="signin" class="btn btn-success" >Sign In</button>
                     </div>
                   </div>
                   </fieldset>
@@ -175,6 +177,14 @@
         </div>
       </div>
     </div>
+
+    <div class="callout" id="thank_you" style="display: none;">
+      <div class="callout-header">Alert!</div>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
+      <div class="callout-container">
+        Successfully Login
+      </div>
+    </div>
       
       <!--change 1-->
       <!-- the content of the page -->
@@ -217,7 +227,58 @@
         #logincheckbox{
           display: none;
         }
+
+
+        /* login successfull message */
+      .callout {
+        position: fixed;
+        bottom: 35px;
+        right: 20px;
+        margin-left: 20px;
+        max-width: 300px;
+      }
+
+      .callout-header {
+        padding: 15px 10px;
+        background: #555;
+        font-size: 20px;
+        color: white;
+      }
+
+      .callout-container {
+        padding: 15px;
+        background-color: #ccc;
+        color: black
+      }
+
+      .closebtn {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      .closebtn:hover {
+        color: lightgrey;
+      }
         
     </style>
+
+    
+    <!-- login successful message -->
+    <script>
+      var nextStep = document.querySelector('#signiin');
+    
+      nextStep.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Hide first view
+        // document.getElementById('my_form').style.display = 'none';
+    
+        // Show thank you message element
+        document.getElementById('thank_you').style.display = 'block';
+      });
+    </script>
     
 </html>

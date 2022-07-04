@@ -9,21 +9,98 @@
 {% endblock %}
 {% block content %}
 <!--form to add the new item in the list-->
-<h1>Register here</h1>
-<h1>Register Panel.</h1>
-<div>
+
+  
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" id="reg">Registration Form</h3>
   {{message}}
   <form class="form" action="/account_creation/{{id}}" method="post">
     {{form.csrf_token}}
-    <div class="name"> {{ form.name }}</div>
-    <div class="DOB"> {{ form.DOB}}</div>
-    <div class="gender"> {{ form.gender}}</div>
-    <div class="name"> {{form.target}}</div>
-    <div class="course"> {{ form.course}}</div>
-    <div class="college"> {{ form.college}}</div>
-    <div class="college_location"> {{ form.college_location}}</div>
-    <div class="semester"> {{ form.semester}}</div>
-    <div class="sub_button"><button style="vertical-align:middle" type="submit" class="btn btn-primary">Sign up!</button></div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+
+    <div class="name form-outline "> 
+      <label class="form-label" for="firstName">First Name</label>
+      {{ form.name }}
+    </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="DOB form-outline "> 
+          <label class="form-label" for="firstName">DOB</label>
+          {{ form.DOB}}
+        </div>
+          </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+
+    <div class="college form-outline "> 
+      <label class="form-label" for="firstName">College's Name</label>
+      {{ form.college }}
+    </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="gender form-outline "> 
+          <label class="form-label" for="firstName">Gender</label>
+          {{ form.gender}}
+        </div>
+          </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 mb-4">
+
+    <div class="course form-outline "> 
+      <label class="form-label" for="firstName">Course Name</label>
+      {{ form.course }}
+    </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8 mb-4">
+
+    <div class="college_location form-outline "> 
+      <label class="form-label" for="firstName">College's Location</label>
+      {{ form.college_location }}
+    </div>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-8 mb-4">
+        <div class="semester form-outline "> 
+          <label class="form-label" for="firstName">Semester</label>
+          {{ form.semester}}
+        </div>
+          </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="name form-outline "> 
+          <label class="form-label" for="firstName">Test Type</label>
+          {{ form.target}}
+        </div>
+          </div>
+    </div>
+
+    
+    <!-- <div class="name"> {{ form.name }}</div> -->
+
+
+    <!-- <div class="DOB" id="dob"> {{ form.DOB}}</div> -->
+    <!-- <div class="gender"> {{ form.gender}}</div> -->
+    <!-- <div class="name"> {{form.target}}</div> -->
+    <!-- <div class="course"> {{ form.course}}</div> -->
+    <!-- <div class="college"> {{ form.college}}</div> -->
+    <!-- <div class="college_location"> {{ form.college_location}}</div>
+    <div class="semester"> {{ form.semester}}</div> -->
+    <div class="sub_button text-center"><button style="vertical-align:middle" type="submit" class="btn btn-primary btn-lg">Sign up!</button></div>
   </form>
 </div>
 
@@ -31,6 +108,19 @@
 {% block style %}
     <!--Style block-->
     <style>
-    
+      #reg{
+        text-align: center;
+        color: red;
+      }
+      .card-body{
+        background-color: aqua;
+        border-radius: 10px;
+      }
+      .form-check-input{
+        margin-left: 50px;
+      }
+      .sub_button{
+        color: white;
+      }
     </style>
-{% endblock %}
+{% endblock %}`
