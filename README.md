@@ -3,8 +3,10 @@
 Issues:
 P1:
 -Login notification
--Add animation in the landing page
--beautify about section
+-fix login notification
+-Add animation in the landing page(Atif)
+-beautify about section(Atif)
+-page content"
 P2:
 -add dashboard icon
 -create admin forum
@@ -27,14 +29,14 @@ Release Notes:
 -added site security
 
 ****************************************************
-04-06-22:
+04-07-22:
 -minor changes
 
 ****************************************************
-Update by Atif on 5 July 2022 at 1:05 AM
-
+-05-07-22
 Front-end Update
----Login successfull message at right bottom side after login
+---Login error fixed
+--- added notification cell
 ---Logo and Aptee style change on top
 ---Registration page update (Complete)
 
