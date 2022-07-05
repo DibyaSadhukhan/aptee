@@ -119,7 +119,7 @@
                   <div class="control-group">
                     <label class="control-label" for="signin"></label>
                     <div class="controls sub_button">
-                      <button id="signiin"  name="signin" class="btn btn-success" >Sign In</button>
+                      <button id="signin"  name="signin" class="btn btn-success" >Sign In</button>
                     </div>
                   </div>
                   </fieldset>
@@ -177,21 +177,24 @@
         </div>
       </div>
     </div>
-
-    <div class="callout" id="thank_you" style="display: none;">
-      <div class="callout-header">Alert!</div>
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
-      <div class="callout-container">
-        Successfully Login
+    <header>
+      <div id="darkBack"></div>
+      <div id="popUp">
+        <div id="close" class="close"><i class="fa fa-times"></i></div>
+        <div id="new"><span>NEW!</span></div>
+        <h2>I'm a notification popup that isn't too distracting or in your face. Scroll down or close me and I will go away. You'll still be able to open me later on don't worry.</h2>
+        <br>
+        <a href="#" target="_blank" class="button">Visit Page</a>
       </div>
-    </div>
-      
+      <div id="plus"><span>NEW<br>&nbsp;&nbsp;<i class="fa fa-plus"></i></span></div>
+    </header>
       <!--change 1-->
       <!-- the content of the page -->
         {% block content %}
 
         {% endblock %}
-   </body>
+        
+    </body>
    <!--style of the page -->
     {% block style %}
 
@@ -263,22 +266,128 @@
       .closebtn:hover {
         color: lightgrey;
       }
-        
-    </style>
+      #popUp {
+        position: fixed;
+        max-width: 350px;
+        height: 225px;
+        background: rgba(236, 240, 241, 1);
+        border: 7px solid #fff;
+        bottom: 0;
+        margin-left: 0;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+      }
 
-    
-    <!-- login successful message -->
+      #new span {
+        background: #fff;
+        position: absolute;
+        color: #1c8dc4;
+        padding: 4px 10px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-top: -5px;
+      }
+
+      #popUp .close {
+        color: #464646;
+        right: 8px;
+        top: 0px;
+        position: absolute;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      #popUp h2 {
+        font-size: 17px;
+        color: #464646;
+        line-height: 24px;
+        font-weight: 400;
+        text-align: center;
+        margin-top: 40px;
+        padding: 0 20px;
+      }
+
+      #body {
+        height: 1200px;
+        background: #eee;
+      }
+
+      a.button {
+        margin: 0 auto;
+        text-align: center;
+        right: 0;
+        left: 0;
+        position: absolute;
+        width: 120px;
+        font-size: 15px;
+        color: #fff;
+        border-bottom: 2px solid #18729f;
+        background: #1c8dc4;
+        border-radius: 4px;
+        padding: 8px 0;
+      }
+
+      #plus {
+        position: fixed;
+        color: #fff;
+        bottom: 15%;
+        font-size: 15px;
+        margin-left: -425px;
+        -webkit-transition: all 1.25s ease;
+        -moz-transition: all 1.25s ease;
+        -o-transition: all 1.25s ease;
+        transition: all 1.25s ease;
+        cursor: pointer;
+        text-align: left;
+        letter-spacing: 1px;
+      }
+
+      #plus span {
+        position: absolute;
+        margin-top: 38px;
+        left: 4px;
+      }
+
+      #plus::after {
+        content: '';
+        display: block;
+        display: relative;
+        border-top: 55px solid transparent;
+        border-bottom: 55px solid transparent;
+        border-left: 55px solid #1c8dc4;
+      }
+
+      @media all and (max-width: 900px) {
+        #popUp {
+          margin-left: -425px;
+        }
+        #plus {
+          margin-left: 0px;
+        }
+      }
+    </style>
     <script>
-      var nextStep = document.querySelector('#signiin');
-    
-      nextStep.addEventListener('click', function (e) {
-        e.preventDefault();
-        // Hide first view
-        // document.getElementById('my_form').style.display = 'none';
-    
-        // Show thank you message element
-        document.getElementById('thank_you').style.display = 'block';
+      $(document).scroll(function() {
+        var scroll = $(this).scrollTop();
+        if (scroll >= 150) {
+          $("#popUp").css("margin-left", "-425px");
+          $("#plus").css("margin-left", "0px");
+        }
+      });
+      $("#plus").click(function() {
+        $("#popUp").css("margin-left", "0px");
+        $("#plus").css("margin-left", "-425px");
+      });
+
+      $("#close").click(function() {
+        $("#popUp").css("margin-left", "-425px");
+        $("#plus").css("margin-left", "0px");
       });
     </script>
+
     
+    <!-- login successful message -->    
 </html>
