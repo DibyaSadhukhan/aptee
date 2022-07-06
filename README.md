@@ -2,14 +2,14 @@
 **********************************************************************************************************
 Issues:
 P1:
--Login notification
--fix login notification
+-Login notification css fix(the notification is at the back instead of being at the front)
 -Add animation in the landing page(Atif)
 -beautify about section(Atif)
--page content"
+-page content (Debajani and Sk shoriful)
+-Backend for Dashboard and Account page(Dibya)
 P2:
 -add dashboard icon
--create admin forum
+-create admin forum(Dibya)
 
 **********************************************************************************************************
 Release Notes:
@@ -39,4 +39,10 @@ Front-end Update
 --- added notification cell
 ---Logo and Aptee style change on top
 ---Registration page update (Complete)
+
+****************************************************
+-06-07-22
+--- Connected notification to backend message
+--- Connected Carosel to data base
+
 

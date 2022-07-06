@@ -67,25 +67,26 @@ def home():
         sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
         wks=sh.worksheet("Client_Details")
         form = SignupForm(flask.request.form)
+        carousel=sh.worksheet("Carousel")
         if form.email_id.data:
                 if form.email_id.data in wks.col_values(2):
                         pos =wks.find(form.email_id.data.lower())
                         if form.password.data!=wks.cell(pos.row,4).value:
-                                return flask.render_template('index.html',form=form,message="Password incorrect")
+                                return flask.render_template('index.html',form=form,message="Password incorrect",data=carousel.get_all_records())
                         else:
-                                return flask.render_template('index.html',form=form,message="Logged in Successfully",id=wks.cell(pos.row,1).value)
+                                return flask.render_template('index.html',form=form,message="Logged in Successfully",id=wks.cell(pos.row,1).value,data=carousel.get_all_records())
                 else:
                         if form.logincheckbox.data==True:
-                                return flask.render_template('index.html',form=form,message="Please Register First!")
+                                return flask.render_template('index.html',form=form,message="Please Register First!",data=carousel.get_all_records())
                         else:
                                 time.sleep(random.randint(1,3))
                                 OTP=random.randint(10000,99999)
                                 id="CL"+datetime.now().strftime("%d%m%Y%H%M%S")
                                 send_email(string.capwords(form.name.data)+' here is the otp for your Aptee account','registration_email.html',form.email_id.data.lower(),param=[string.capwords(form.name.data),OTP,('127.0.0.1/account_creation/'+str(id))])
                                 wks.append_row([id,form.email_id.data.lower(),string.capwords(form.name.data),form.password.data,OTP])
-                                return flask.render_template('index.html',form=form,message="registration Successful!",id=id)
+                                return flask.render_template('index.html',form=form,message="registration Successful!",id=id,data=carousel.get_all_records())
         else:
-                return flask.render_template('index.html',form=form)
+                return flask.render_template('index.html',form=form,data=carousel.get_all_records())
 @app.route('/account_creation/<id>',methods=['GET','POST'])
 def account(id):
         sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
