@@ -50,9 +50,7 @@
               <li class="nav-item rounded">
                 <a class="nav-link" href="#"><i class="bi bi-telephone-fill me-2"></i>Contact</a>
               </li>
-              <!-- <li class="nav-item login rounded">
-                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill me-2"></i><span>LogIn/SignUp</span></a>
-              </li> -->
+            
               {%if id%}
               <li class="nav-item rounded">
                 <a class="nav-link" href="/Dashboard/{{id}}"><i class="bi bi-telephone-fill me-2"></i>Dashboard</a>
@@ -209,22 +207,6 @@
     {% endblock %}
    <style>
 
-        /* body {
-            background-color: #212121;
-            color: white;
-        }
-        nav{
-            font-family: "Ubuntu Condensed";   
-        }
-        .page_heading{
-            font-family: "Ubuntu Condensed";
-            text-align:center; 
-            color: white;
-        }
-        @media all and (max-width: 730px){
-        }
-        @media all and (max-width: 400px){
-        } */
         
         .navbar-nav .nav-item:hover {
         background-color: rgba(180, 190, 203, 0.4);
@@ -240,8 +222,8 @@
         }
         #popUp {
           position: fixed;
-          max-width: 350px;
-          height: 50vh;
+          max-width: 200px;
+          height: 30vh;
           background: rgba(236, 240, 241, 1);
           border: 7px solid #fff;
           bottom: 0;
@@ -250,6 +232,7 @@
           -moz-transition: all 1s ease;
           -o-transition: all 1s ease;
           transition: all 1s ease;
+          display: block;
         }
 
         #new span {
