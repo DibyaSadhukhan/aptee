@@ -45,4 +45,10 @@ Front-end Update
 --- Connected notification to backend message
 --- Connected Carosel to data base
 
+***************************************
+update frontend by Atif
+--- Contact us section in home page update
+--- Event section in home page update
+--- User Dasboard in register page
+
 

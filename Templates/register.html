@@ -8,13 +8,28 @@
   <!--Page heading-->
 {% endblock %}
 {% block content %}
+
+<!-- Dashboard -->
+
+<div class="sidebar">
+  <img  src="https://drive.google.com/uc?export=veiw&id=13GfaBPzRjcAJiI7U5n1Fenep7qaLomaM" class="avatar">
+  <a class="active" href="#account"><i class="fa-solid fa-user"></i>Account Details</a>
+  <a href="#test"><i class="fa-solid fa-laptop-code"></i>Test History</a>
+  <a href="#analysis"><i class="fa-solid fa-square-poll-vertical"></i>Our Analysis</a>
+  <a href="#coin"><i class="fa-solid fa-coins"></i>Coin History</a>
+  <a href="#problem"><i class="fa-solid fa-circle-exclamation"></i>Your's Problem</a>
+  <a href="#recommend"><i class="fa-solid fa-computer"></i>Recommnded Test</a>
+  <a href="#logout"><i class="fa-solid fa-toggle-off"></i>Logout</a>
+</div>
+
+
 <!--form to add the new item in the list-->
 
   
 <section class="vh-100 gradient-custom">
   <div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
-      <div class="col-12 col-lg-9 col-xl-7">
+      <div class="col-6 col-lg-12 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" id="reg">Registration Form</h3>
@@ -89,17 +104,6 @@
           </div>
     </div>
 
-    
-    <!-- <div class="name"> {{ form.name }}</div> -->
-
-
-    <!-- <div class="DOB" id="dob"> {{ form.DOB}}</div> -->
-    <!-- <div class="gender"> {{ form.gender}}</div> -->
-    <!-- <div class="name"> {{form.target}}</div> -->
-    <!-- <div class="course"> {{ form.course}}</div> -->
-    <!-- <div class="college"> {{ form.college}}</div> -->
-    <!-- <div class="college_location"> {{ form.college_location}}</div>
-    <div class="semester"> {{ form.semester}}</div> -->
     <div class="sub_button text-center"><button style="vertical-align:middle" type="submit" class="btn btn-primary btn-lg">Sign up!</button></div>
   </form>
 </div>
@@ -108,12 +112,17 @@
 {% block style %}
     <!--Style block-->
     <style>
+
+      /* form */
+      .gradient-custom{
+        height: 100%;
+      }
       #reg{
         text-align: center;
         color: red;
       }
       .card-body{
-        background-color: aqua;
+        background-color: rgb(160, 244, 244);
         border-radius: 10px;
       }
       .form-check-input{
@@ -122,5 +131,79 @@
       .sub_button{
         color: white;
       }
+
+
+      /* dashboard */
+
+      .avatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+      justify-content: center;
+}
+
+
+
+      .sidebar {
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+.sidebar img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 20px;
+}
+ 
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+.sidebar i{
+  padding: 5px;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
     </style>
 {% endblock %}`
