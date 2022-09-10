@@ -67,7 +67,7 @@ def home():
         sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1CyWjl6Y5Gi_e3z7A8wtw-qOaBe3GvCD4sqWWvaMubXY/edit?usp=sharing')
         wks=sh.worksheet("Client_Details")
         form = SignupForm(flask.request.form)
-        carousel=sh.worksheet("Carousel")
+        carousel=sh.worksheet("Events")
         if form.email_id.data:
                 if form.email_id.data in wks.col_values(2):
                         pos =wks.find(form.email_id.data.lower())
